@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> WWTBAM </title>
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"> </script>
+    <link rel="stylesheet" href="game.css">
+
+</head>
+<body id="body">
+
+<div id="main_container">
+    <div id="start_container">
+    <p><input class="input_name"type="text"  placeholder="Enter your name to play..." v-model="name"  @keyup.enter="startGame()"></p>
+    </div>
+
+    <div id="game_container" style= "display: none">
+        <video id="background-video" autoplay loop muted poster="videoloop.part">
+            <source src="videoloop.part" type="video/mp4">
+        </video>
+        <div id="question_container">
+        <h3> Prize: ${{questionPrize}} </h3>
+        <h1> {{currentQuestion+1}}) {{question}} </h1>
+        </div>
+        <button id="b1"> A) {{content[0]}}</button>
+        <button id="b2"> B) {{content[1]}}</button>
+        <button id="b3"> C) {{content[2]}}</button>
+        <button id="b4"> D) {{content[3]}}</button>
+        <div id="timer_container">
+        <h1> Time remaining: {{myTimer}} </h1>
+        </div>
+    </div>
+
+    <div style= "display: none" id="end_container">
+        <div class="highscores_container">
+        <h1> Good Job {{name}}, you answered {{currentQuestion}} questions correctly and you won ${{prizeMoney}}. </h1>
+        <h1> High Scores </h1>
+            <div class="hs">
+        <ul>
+            <li v-for="data in highScores"> Name: {{data.userName}} <br> Question Reached: {{data.questionReached}}
+                <br> Money Earned: ${{data.moneyEarned}} <br> <br></li>
+        </ul>
+            </div>
+        </div>
+    </div>
+
+    <div style= "display: none" id="win_container">
+        <div class="highscores_container">
+        <h1> Congratulations {{name}}! You answered all 15 questions correctly and you are taking home ${{prizeMoney}}! </h1>
+        <h1> High Scores </h1>
+            <div class="hs">
+        <ul>
+            <li v-for="data in highScores"> Name: {{data.userName}} <br> Question Reached: {{data.questionReached}}
+                <br> Money Earned: ${{data.moneyEarned}} <br> <br> </li>
+        </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+    <script src="game.js"> </script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <script>
+
+// firebase configuration
+const firebaseConfig = {
+apiKey: "AIzaSyDkQ1hX-l09g3jEDZrY4yOTUWE6NIdlt5o",
+authDomain: "wwtbamgame-81bd8.firebaseapp.com",
+projectId: "wwtbamgame-81bd8",
+storageBucket: "wwtbamgame-81bd8.appspot.com",
+messagingSenderId: "119281899922",
+appId: "1:119281899922:web:e7e784c47e058bcf6e094b",
+measurementId: "G-XCV89XF5E7"
+};
+
+//initialize the database
+firebase.initializeApp(firebaseConfig)
+const db = firebase.firestore()
+db.settings({});
+
+    </script>
+</html>
+
